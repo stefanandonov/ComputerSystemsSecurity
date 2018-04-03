@@ -8,7 +8,7 @@ public class WPA2Test {
 	public static void main (String [] args) throws Exception{
 		byte [] preamble = "PREAMBLE".getBytes();
 		byte [] sourceMAC = {12,13,14,15,16,17};
-		byte [] destinationMAC = {11,10,9,7,25,26};
+		byte [] destinationMAC = {12,10,9,7,25,26};
 		byte [] qos = {12};
 		byte [] pn = {0,0,0,0,0,10};
 		Header header = new Header (preamble,sourceMAC,destinationMAC,qos,pn);
@@ -51,6 +51,12 @@ public class WPA2Test {
 		encryptedData.stream().forEach(array -> {
 			System.out.print(ByteConverter.byteArrayToHex(array));
 		});
+		
+		byte [] destinationMAC1 = {10,101,1,1,1,1};
+		header = new Header (preamble,sourceMAC,destinationMAC1,qos,pn);
+		f = new Frame(header,data);
+		
+		
 		System.out.println();
 		System.out.println("DECRYPTED");
 		List<byte []> decryptedData = f.decryptData(key, encryptedData);
@@ -58,8 +64,9 @@ public class WPA2Test {
 			System.out.print(ByteConverter.byteArrayToHex(array));
 		});
 		
-		System.out.println(" ");
-		System.out.println(f.verifyMIC(key, decryptedData));
+		System.out.println();
+		System.out.println(f.verifyMIC(key, decryptedData,MIC));
+		
 		
 	}
 

@@ -17,6 +17,14 @@ public class Frame {
 		counter = BigInteger.valueOf(0);
 	}
 	
+	public Header getHeader() {
+		return header;
+	}
+	
+	public void setHeader(Header h) {
+		header=header;
+	}
+	
 	public static byte [] xor (byte [] array1, byte [] array2) {
 		byte [] result = new byte [array1.length];
 		
@@ -123,14 +131,14 @@ public class Frame {
 		return result;
 	}
 	
-	public boolean verifyMIC (byte [] key, List<byte []> decryptedData) throws Exception {
+	public boolean verifyMIC (byte [] key, List<byte []> decryptedData, byte [] MIC) throws Exception {
 		//System.out.println(ByteConverter.byteArrayToHex(this.calculateMIC(key)));
 		//System.out.println(ByteConverter.byteArrayToHex(this.calculateMICwithDecryptedData(key, decryptedData)));
 		
-		byte [] MICoriginal = this.calculateMIC(key);
+		byte [] MICoriginal = MIC;
 		byte [] MICafterDecryption = this.calculateMICwithDecryptedData(key, decryptedData);
 
-		for (int i=0;i<MICoriginal.length/2;i++)
+		for (int i=0;i<MICoriginal.length;i++)
 			if (MICoriginal[i]!=MICafterDecryption[i])
 				return false;
 		

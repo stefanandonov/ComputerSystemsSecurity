@@ -34,6 +34,14 @@ public class Header {
 		this.pn=pn;
 	}
 	
+	public byte [] getDestinationMAC() {
+		return destinationMAC;
+	}
+	
+	public void setDestinationMAC(byte [] newMac) {
+		destinationMAC=newMac;
+	}
+	
 	public byte [] generateNonce() {
 		byte [] nonce = new byte [16];
 		
